@@ -10,10 +10,11 @@ class Hangman
     # input = @irc_server.gets
     # input.split(":")
     # @word = input[-1]
-
+    puts "Enter a word."
     @word = gets.chomp
     @past_guesses = []
     @hang_val = 0
+    #@guess = 'p'
   end
 
   def hide_word
@@ -27,8 +28,8 @@ class Hangman
     @irc_server.puts "PRIVMSG #{@channel} : Guess a letter."
     #@guess = gets.chomp
 
-    input = @irc_server.gets
-    input.split(":")
+    input = @irc_server.gets.chomp
+    #@irc_server.puts "PRIVMSG #{@channel} : Input is #{input}"
     @guess = input[-1]
     puts "You guessed #{@guess}"
   end
@@ -46,19 +47,20 @@ class Hangman
 
     puts @user_word
     @irc_server.puts "PRIVMSG #{@channel} : #{@user_word}"
+    sleep(1)
     puts "Previous guesses:"
     @irc_server.puts "PRIVMSG #{@channel} : Previous guesses:"
     print_previous_guesses
   end
 
-  def choose_word
-    #puts "Enter a new word."
-    @irc_server.puts "PRIVMSG #{@channel} Enter a new word."
+  # def choose_word
+  #   #puts "Enter a new word."
+  #   @irc_server.puts "PRIVMSG #{@channel} Enter a new word."
     
-    input = @irc_server.gets
-    input.split(":")
-    @word = input[-1]
-  end
+  #   input = @irc_server.gets
+  #   input.split(":")
+  #   @word = input[-1]
+  # end
 
   def play
     #choose_word
@@ -77,8 +79,9 @@ class Hangman
 
   def print_previous_guesses
     @past_guesses.each do |x| print x;
-      @irc_server.print "PRIVMSG #{@channel} : #{x}" 
-    puts ""
+      @irc_server.puts "PRIVMSG #{@channel} : #{x}" 
+      sleep(1)
+    #puts ""
     end
   end
 
@@ -87,11 +90,12 @@ class Hangman
     @irc_server.puts "PRIVMSG #{@channel} : No match! Let's hang 'em!"
     puts "He has a:"
     @irc_server.puts "PRIVMSG #{@channel} : He has a: "
-    body_array = ["Head O", "Torso |", "Left arm /", "Right arm \\", "Left leg /", "Right leg \\", "You hung him! You really did it! Who hangs people? That's awful.\nCut him down. The word is '#{@word}'."]
+    body_array = ["Head O", "Torso |", "Left arm /", "Right arm \\", "Left leg /", "Right leg \\", "You hung him! You really did it! Who hangs people? That's awful. Cut him down. The word is '#{@word}'."]
     @counter = 0
     until @counter == @hang_val
       puts body_array[@counter]
       @irc_server.puts "PRIVMSG #{@channel} : #{body_array[@counter]}"
+      sleep(1)
       @counter += 1
     end 
   end
