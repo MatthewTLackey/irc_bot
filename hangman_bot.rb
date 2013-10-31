@@ -80,7 +80,7 @@ class Hangman
   def print_previous_guesses
     @past_guesses.each do |x| print x;
       @irc_server.puts "PRIVMSG #{@channel} : #{x}" 
-      sleep(1)
+      sleep(0.5)
     #puts ""
     end
   end
@@ -95,7 +95,7 @@ class Hangman
     until @counter == @hang_val
       puts body_array[@counter]
       @irc_server.puts "PRIVMSG #{@channel} : #{body_array[@counter]}"
-      sleep(1)
+      sleep(0.5)
       @counter += 1
     end 
   end
